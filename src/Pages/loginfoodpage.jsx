@@ -1,22 +1,57 @@
-import React from "react";
+import React, { useState } from "react";
 import Headfood from "../component/headfood";
+import axios from "axios"; // ✅ Add this line
 
 const Loginfood = () => {
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  // Handle input changes
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // prevent page reload
+    console.log("User Information:", formData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/login", // ✅ Make sure backend route exists
+        formData,
+        { withCredentials: true }
+      );
+
+      console.log("Backend Response:", response.data);
+      alert("Login successful!");
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("Login failed");
+    }
+  };
+
   return (
-    <div className=" sm:mt-8 mt-0 flex items-center justify-center min-h-screen bg-gray-100 ">
-      <Headfood/>
+    <div className="sm:mt-8 mt-0 flex items-center justify-center min-h-screen bg-gray-100">
+      <Headfood />
       <div className="bg-white mx-3 sm:p-8 p-3 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="sm:text-3xl text-2xl font-bold text-center text-red-500 mb-6">
           FoodiesHub Login
         </h2>
 
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium mb-1">Email Address</label>
             <input
               type="email"
               name="email"
-              placeholder=""
+              value={formData.email}
+              onChange={handleChange}
               required
               className="w-full border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
             />
@@ -27,6 +62,8 @@ const Loginfood = () => {
             <input
               type="password"
               name="password"
+              value={formData.password}
+              onChange={handleChange}
               placeholder="Enter your password"
               required
               className="w-full border border-gray-300 px-4 sm:py-2 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"
@@ -38,7 +75,9 @@ const Loginfood = () => {
               <input type="checkbox" className="mr-2" />
               Remember me
             </label>
-            <a href="#" className="text-red-500 hover:underline">Forgot password?</a>
+            <a href="#" className="text-red-500 hover:underline">
+              Forgot password?
+            </a>
           </div>
 
           <button
@@ -51,7 +90,9 @@ const Loginfood = () => {
 
         <p className="text-center mt-6 text-sm text-gray-600">
           Don't have an account?{" "}
-          <a href="#" className="text-red-500 hover:underline">Register here</a>
+          <a href="#" className="text-red-500 hover:underline">
+            Register here
+          </a>
         </p>
       </div>
     </div>
