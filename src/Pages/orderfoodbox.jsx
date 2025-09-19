@@ -3,7 +3,7 @@ import Headfood from "../component/headfood";
 
 const OrderPage = () => {
   const [order, setOrder] = useState({
-    phone:"",
+    phone: "",
     name: "",
     address: "",
     meal: "",
@@ -18,14 +18,40 @@ const OrderPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // ✅ simple validation check
+    if (!order.name || !order.phone || !order.address || !order.meal) {
+      alert("⚠️ Please fill in all required fields!");
+      return;
+    }
+
+    // ✅ success alert with chosen details
+    alert(
+      `✅ Order submitted successfully!\n\n` +
+        `👤 Name: ${order.name}\n` +
+        `📞 Phone: ${order.phone}\n` +
+        `🏠 Address: ${order.address}\n` +
+        `🍲 Meal: ${order.meal}\n` +
+        `🔢 Quantity: ${order.quantity}\n` +
+        (order.instructions ? `📝 Note: ${order.instructions}` : "")
+    );
+
     console.log("Order submitted:", order);
-    alert("✅ Order submitted successfully!");
-    
+
+    // reset form after submit
+    setOrder({
+      phone: "",
+      name: "",
+      address: "",
+      meal: "",
+      quantity: 1,
+      instructions: "",
+    });
   };
 
   return (
-    <div className="sm:mt-17 mt-12  min-h-screen bg-orange-50 p-6 flex justify-center items-center">
-      <Headfood/>
+    <div className="sm:mt-17 mt-12 min-h-screen bg-orange-50 p-6 flex justify-center items-center">
+      <Headfood />
       <div className="bg-white shadow-md rounded-lg sm:p-8 p-3 w-full max-w-lg">
         <h2 className="text-2xl font-bold text-center text-red-500 mb-6">
           🛒 Place Your Order
@@ -50,9 +76,10 @@ const OrderPage = () => {
             placeholder="Delivery Address"
             className="w-full border sm:p-3 p-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
+
           <input
-            type="text"
-            name="address"
+            type="tel"   // ✅ phone input
+            name="phone" // ✅ fixed name
             value={order.phone}
             onChange={handleChange}
             required
@@ -69,7 +96,9 @@ const OrderPage = () => {
           >
             <option value="">Select Meal</option>
             <option value="Jollof Rice & Chicken">Jollof Rice & Chicken</option>
-            <option value="Egusi Soup & Pounded Yam">Egusi Soup & Pounded Yam</option>
+            <option value="Egusi Soup & Pounded Yam">
+              Egusi Soup & Pounded Yam
+            </option>
             <option value="Amala & Ewedu">Amala & Ewedu</option>
             <option value="Fried Rice">Fried Rice</option>
             <option value="Okro Soup & Fufu">Okro Soup & Fufu</option>

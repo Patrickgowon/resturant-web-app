@@ -9,6 +9,11 @@ const Loginfood = () => {
     email: "",
     password: "",
   });
+const data = localStorage.getItem('email')
+  if(data){
+  navigate('/menu2')
+  }
+
 
   // Handle input changes
   const handleChange = (e) => {
@@ -36,6 +41,7 @@ const Loginfood = () => {
         //redirect..
         navigate('/menu2')
       }
+
       
       
     } catch (error) {
@@ -43,6 +49,8 @@ const Loginfood = () => {
       alert("Login failed");
     }
   };
+
+  
 
   return (
     <div className="sm:mt-8 mt-0 flex items-center justify-center min-h-screen bg-gray-100">

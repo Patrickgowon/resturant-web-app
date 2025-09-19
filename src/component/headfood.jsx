@@ -1,12 +1,22 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 const Navs = () => {
-    const data = localStorage.getItem('email');
+  const navigate = useNavigate();
+  const data = localStorage.getItem("email");
+
+  const btn = () => {
+    localStorage.removeItem("email"); // remove email
+    const checkData = localStorage.getItem("email");
+    if (!checkData) {
+      navigate("/loginfood"); // redirect to login page
+    }
+  };
+
   return (
     <>
-    <Link to={"/menu2"} className="hover:text-red-500">
+      <Link to={"/menu2"} className="hover:text-red-500">
         Menu
       </Link>
       <Link to={"/"} className="hover:text-red-500">
@@ -21,12 +31,26 @@ const Navs = () => {
       <Link to={"/cont"} className="hover:text-red-500">
         Contact
       </Link>
-      { !data && <Link to={"/loginfood"} className="hover:text-red-500">
-        Login
-      </Link>}
-      { !data && <Link to={"/signfood"} className="hover:text-red-500">
-        Signin
-      </Link>}
+
+      {!data && (
+        <Link to={"/loginfood"} className="hover:text-red-500">
+          Login
+        </Link>
+      )}
+      {!data && (
+        <Link to={"/signfood"} className="hover:text-red-500">
+          Signin
+        </Link>
+      )}
+
+      {data && (
+        <button
+          onClick={btn}
+          className="hover:text-red-500 bg-transparent border-none cursor-pointer"
+        >
+          Logout
+        </button>
+      )}
     </>
   );
 };
