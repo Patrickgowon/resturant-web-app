@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import Headfood from "../component/headfood";
 import axios from "axios"; // ✅ Add this line
+import { useNavigate } from "react-router-dom";
 
 const Loginfood = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,8 +30,14 @@ const Loginfood = () => {
         { withCredentials: true }
       );
 
-      console.log("Backend Response:", response.data);
-      alert("Login successful!");
+      if (response.status == 200) {
+        localStorage.setItem('email', response.data.user.email)
+        console.log("Backend Response:", response.data);
+        //redirect..
+        navigate('/menu2')
+      }
+      
+      
     } catch (error) {
       console.error("Error during login:", error);
       alert("Login failed");
