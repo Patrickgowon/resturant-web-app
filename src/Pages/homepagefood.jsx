@@ -10,7 +10,7 @@ const Homepagefood = () =>{
                 <div className="bg-black bg-opacity-60 text-white  p-8 rounded-xl text-center max-w-xl">
                 <h2 className="sm:text-4xl text-2xl font-bold mb-4">Delicious Meals Delivered Fresh</h2>
                 <p className="text-lg mb-6">Order your favorite meals and enjoy fast delivery.</p>
-                <Link to={'orderfood'} className="bg-red-500 hover:bg-red-600 px-6 py-3 rounded-full text-white sm:text-lg text-sm font-semibold">Order Now</Link>
+                <Link  className="bg-red-500 hover:bg-red-600 px-6 py-3 rounded-full text-white sm:text-lg text-sm font-semibold">Order Now</Link>
                 </div>
             </section>
             <section className="py-16 px-3">

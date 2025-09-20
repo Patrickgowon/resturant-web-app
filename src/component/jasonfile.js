@@ -175,6 +175,20 @@ export const dinnerItems = [
     price: 2300,
     image: "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_1280.jpg",
   },
+  {
+    id: 8,
+    name: "Pounded Yam & Egusi Soup",
+    description: "Soft pounded yam served with rich melon seed (egusi) soup.",
+    price: 2500,
+    image: "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_1280.jpg",
+  },
+  {
+    id: 9,
+    name: "Pounded Yam & Egusi Soup",
+    description: "Soft pounded yam served with rich melon seed (egusi) soup.",
+    price: 2500,
+    image: "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_1280.jpg",
+  },
 ];
 export const drinkItems = [
   {
@@ -217,6 +231,20 @@ export const drinkItems = [
     name: "Coconut Water",
     description: "Fresh coconut water straight from the fruit, refreshing and natural.",
     price: 600,
+    image: "https://www.eatthis.com/wp-content/uploads/sites/4/2022/06/coconut-water.jpg?quality=82&strip=1",
+  },
+   {
+    id: 7,
+    name: "Zobo Drink",
+    description: "Chilled hibiscus drink with ginger and pineapple flavor.",
+    price: 500,
+    image: "https://www.eatthis.com/wp-content/uploads/sites/4/2022/06/coconut-water.jpg?quality=82&strip=1",
+  },
+   {
+    id: 8,
+    name: "Zobo Drink",
+    description: "Chilled hibiscus drink with ginger and pineapple flavor.",
+    price: 500,
     image: "https://www.eatthis.com/wp-content/uploads/sites/4/2022/06/coconut-water.jpg?quality=82&strip=1",
   },
 ];
