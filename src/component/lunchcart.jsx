@@ -7,6 +7,9 @@ const Lunch = ({ id, name, description, price, image }) => {
   const { addToCart } = useCart();
   const [isLiked, setIsLiked] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
+  const [orderMessage, setOrderMessage] = useState('');
+  const [orderedItem, setOrderedItem] = useState(null);
+
 
   const handleAddToCart = () => {
     addToCart({ id, name, price, image });
@@ -14,6 +17,24 @@ const Lunch = ({ id, name, description, price, image }) => {
     
     // Reset the added state after a short delay
     setTimeout(() => setIsAdded(false), 1500);
+  };
+
+  const handleOrderNOw = async () => {
+    const orderData = {name, description,price,image};
+
+    try {
+       
+      const response = await axios.post('http://localhost:5000/api/order',orderData)
+
+      setOrderedItem(response.data.order);
+      setOrderMessage('Request sent successfully!');
+      setTimeout(() => setOrderMessage(''),2000);
+
+    } catch (error) {
+      console.error('order request failed',error);
+      setOrderMessage('failed to send request');
+      setTimeout(() => setOrderMessage(''),2000);
+    }
   };
 
   return (
@@ -73,12 +94,22 @@ const Lunch = ({ id, name, description, price, image }) => {
           </button>
 
           <Link 
-             
+             onClick={handleOrderNOw}
             className="bg-red-500 text-white text-sm px-4 py-2 rounded-full hover:bg-red-600 transition-colors font-medium flex items-center gap-1"
           >
             Order Now
           </Link>
         </div>
+            {orderMessage && (
+          <div className="mt-3 text-center text-green-600 font-medium">
+            {orderMessage}
+          </div>
+        )}
+        {orderedItem && (
+          <div className="mt-2 text-sm text-gray-700">
+            <strong>Item:</strong> {orderedItem.name} – ₦{orderedItem.price}
+          </div>
+        )}
       </div>
     </div>
   );

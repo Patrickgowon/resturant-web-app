@@ -2,19 +2,47 @@ import { Link } from "react-router-dom";
 import React, { useState } from "react";
 import { useCart } from "./CartContext";
 import { Plus, ShoppingCart, Heart } from "lucide-react";
+import axios from "axios"; // ✅ Import axios for API requests
 
 const Breakcart = ({ id, name, description, price, image }) => {
   const { addToCart } = useCart();
   const [isLiked, setIsLiked] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
+  const [orderMessage, setOrderMessage] = useState(""); // ✅ Track success message
+  const [orderedItem, setOrderedItem] = useState(null); // ✅ Track clicked item
 
   const handleAddToCart = () => {
     addToCart({ id, name, price, image });
     setIsAdded(true);
-    
-    // Reset the added state after a short delay
+
     setTimeout(() => setIsAdded(false), 1500);
   };
+
+  
+
+
+  // ✅ Handle sending order request
+const handleOrderNow = async () => {
+  const orderData = { name, description, price, image };
+
+  try {
+    
+    const response = await axios.post("http://localhost:5000/api/order", orderData);
+
+    
+    setOrderedItem(response.data.order);
+    setOrderMessage("Request sent successfully!");
+    setTimeout(() => setOrderMessage(""), 2000);
+
+    
+  } catch (error) {
+    console.error("Order request failed:", error);
+    setOrderMessage("Failed to send request!");
+    setTimeout(() => setOrderMessage(""), 2000);
+  }
+};
+
+
 
   return (
     <div className="px-4 sm:px-0 group bg-white rounded-1xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full w-[35rem] sm:w-[20rem] ">
@@ -25,19 +53,19 @@ const Breakcart = ({ id, name, description, price, image }) => {
           alt={name}
           className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        
+
         {/* Like Button */}
-        <button 
+        <button
           onClick={() => setIsLiked(!isLiked)}
           className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-red-50 transition-colors"
           aria-label="Add to favorites"
         >
-          <Heart 
-            size={18} 
-            className={isLiked ? "fill-red-500 text-red-500" : "text-gray-400"} 
+          <Heart
+            size={18}
+            className={isLiked ? "fill-red-500 text-red-500" : "text-gray-400"}
           />
         </button>
-        
+
         {/* Price Tag */}
         <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm">
           <span className="font-bold text-red-500">₦{price}</span>
@@ -46,16 +74,20 @@ const Breakcart = ({ id, name, description, price, image }) => {
 
       {/* Content Container */}
       <div className="p-4 flex flex-col flex-grow ">
-        <h2 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-1">{name}</h2>
-        <p className="text-sm text-gray-600 mb-4 flex-grow line-clamp-2">{description}</p>
+        <h2 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-1">
+          {name}
+        </h2>
+        <p className="text-sm text-gray-600 mb-4 flex-grow line-clamp-2">
+          {description}
+        </p>
 
         {/* Action Buttons */}
         <div className="flex justify-between items-center mt-auto">
           <button
             onClick={handleAddToCart}
             className={`flex items-center gap-1 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-              isAdded 
-                ? "bg-green-500 text-white" 
+              isAdded
+                ? "bg-green-500 text-white"
                 : "bg-gray-100 text-gray-800 hover:bg-red-500 hover:text-white"
             }`}
           >
@@ -72,18 +104,29 @@ const Breakcart = ({ id, name, description, price, image }) => {
             )}
           </button>
 
-          <Link 
-             
+          {/* ✅ Order Now Button */}
+          <button
+            onClick={handleOrderNow}
             className="bg-red-500 text-white text-sm px-4 py-2 rounded-full hover:bg-red-600 transition-colors font-medium flex items-center gap-1"
           >
             Order Now
-          </Link>
+          </button>
         </div>
+
+        {/* ✅ Show success message & ordered item */}
+        {orderMessage && (
+          <div className="mt-3 text-center text-green-600 font-medium">
+            {orderMessage}
+          </div>
+        )}
+        {orderedItem && (
+          <div className="mt-2 text-sm text-gray-700">
+            <strong>Item:</strong> {orderedItem.name} – ₦{orderedItem.price}
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default Breakcart;
-
-
