@@ -6,7 +6,7 @@ const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  
+  // ✅ Load cart from localStorage on first render
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
@@ -14,24 +14,35 @@ export const CartProvider = ({ children }) => {
     }
   }, []);
 
- 
+  // ✅ Save cart to localStorage when cartItems change
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  // ✅ Add item to cart
   const addToCart = (item) => {
-    setCartItems((prev) => [...prev, item]);
+    setCartItems((prevItems) => [...prevItems, item]);
   };
 
-  const removeFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  // ✅ Remove item from cart
+  const removeFromCart = (index) => {
+    setCartItems((prevItems) => prevItems.filter((_, i) => i !== index));
+  };
+
+  // ✅ Clear cart completely
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem("cart");
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, removeFromCart, clearCart }}
+    >
       {children}
     </CartContext.Provider>
   );
 };
 
+// Hook to use CartContext easily
 export const useCart = () => useContext(CartContext);
