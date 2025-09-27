@@ -152,7 +152,7 @@ const Headfood = () => {
     if (!selectedPayment) {
       alert("Please select a payment method");
       return;
-    }
+    };
 
     try {
       let orderData;
