@@ -17,6 +17,8 @@ import AnalyticsPage from './adminpages/analystic';
 import CustomerPage from './adminpages/customer';
 import WalletPage from './Pages/walletpage';
 import FoodOrderPage from './Pages/ordercart';
+import Adminlogin from './adminpages/Adminlogin';
+
 
 
 
@@ -27,6 +29,7 @@ const App = () =>{
             
             
     <Routes>
+      <Route path='/adminlogin' element={<Adminlogin/>}
       <Route path='/ordercart' element={<FoodOrderPage/>}/>
       <Route path='wallet' element={<WalletPage/>}/>
       <Route path='/setting' element={<SettingsPage/>}/>

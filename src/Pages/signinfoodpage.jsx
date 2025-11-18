@@ -24,7 +24,7 @@ const SignInfood = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/register", 
+        "http://localhost:5000/api/auth/register", 
         formData,
         { withCredentials: true }
       );

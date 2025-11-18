@@ -30,7 +30,7 @@ const data = localStorage.getItem('email')
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/login", // ✅ Make sure backend route exists
+        "http://localhost:5000/api/auth/login", 
         formData,
         { withCredentials: true }
       );
